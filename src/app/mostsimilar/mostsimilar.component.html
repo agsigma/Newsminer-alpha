@@ -1,0 +1,29 @@
+<mat-card>
+  <button [disabled]="!DataStore.UI.selectedArticlesHasChanged" (click)="DataStore.mostSimilarArticlesIds(DataStore.UI.selectedArticles)">
+    REFRESH SIMILAR ARTICLES
+  </button>
+  <!-- 
+<mat-list>    
+    <mat-list-item *ngFor="let similarityDatum of DataStore.UI.similarArticles" title="{{ DataStore.data.articles[similarityDatum[0]].meta.description }}">
+      <h4 mat-line>
+        <a (click)="setMainArticle(similarityDatum[0])">{{ DataStore.data.articles[similarityDatum[0]].meta.title }}</a>
+      </h4>
+      <p> 
+          <small>{{ similarityDatum[1] | number:'1.3-3'}} </small>&nbsp;&nbsp;&nbsp;
+          <mat-slide-toggle type="checkbox" [checked]=isArticleSelected(similarityDatum[0]) (change)="toggleSelectedState(similarityDatum[0])"></mat-slide-toggle>
+      </p>
+    </mat-list-item>
+    <mat-list> -->
+
+  <ul>
+    <li *ngFor="let similarityDatum of DataStore.UI.similarArticles" title="{{ DataStore.data.articles[similarityDatum[0]].meta.description }}">
+      <p>
+        <a (click)="setMainArticle(similarityDatum[0])">{{ DataStore.data.articles[similarityDatum[0]].meta.title }}</a>
+        <br>
+        <mat-slide-toggle type="checkbox" [checked]=isArticleSelected(similarityDatum[0]) (change)="toggleSelectedState(similarityDatum[0])"></mat-slide-toggle>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small title="Similarity value">{{ similarityDatum[1] | number:'1.3-3'}}</small>
+      </p>
+    </li>
+
+  </ul>
+</mat-card>

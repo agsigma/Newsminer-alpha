@@ -1,0 +1,43 @@
+<mat-tab-group mat-stretch-tabs class="mat-elevation-z4" [selectedIndex]="getActivePanelIndex()"
+(selectedIndexChange)="resetSelectedPanelState($event)"><!--example-stretched-tabs-->
+    <mat-tab label="Article:">
+      <div class="col-xs-12" *ngIf="DataStore.UI.mainArticle">
+        <h2>{{ DataStore.UI.mainArticle?.meta?.title }}</h2>
+        <p><em>{{ DataStore.UI.mainArticle?.meta?.description }}</em></p>
+        <div style="white-space: pre-wrap; text-align: justify" [innerHTML]="DataStore.UI.mainArticle.meta.text" *ngIf="DataStore.UI.mainArticle?.meta?.text">
+          <!-- {{ DataStore.UI.mainArticle.meta.text }} -->
+        </div>
+        <p class="kreciol" *ngIf="!DataStore.UI.mainArticle?.meta?.text">Please wait, text of the article is being fetch from the server...</p>
+        <p *ngIf="DataStore.UI.mainArticle?.meta?.text">
+            <mat-slide-toggle type="checkbox" [checked]=isArticleSelected(DataStore.UI.mainArticle.id) (change)="toggleSelectedState(DataStore.UI.mainArticle.id)"></mat-slide-toggle>
+        </p>        
+      </div>
+    </mat-tab>
+    <mat-tab label="Search results:">
+      <ul>
+        <li *ngFor="let artId of DataStore.UI.searchResults">
+          <!-- {{DataStore.data.articles[artId] | json}} -->
+          <a (click)="setMainArticle(artId)" >{{DataStore.data.articles[artId].meta.title}} </a>
+          <!-- <input type="checkbox" [checked]=isArticleSelected(artId) (change)="toggleSelectedState(artId)"> -->
+          <mat-slide-toggle class="slideToggle" type="checkbox" [checked]=isArticleSelected(artId) (change)="toggleSelectedState(artId)"></mat-slide-toggle>
+        </li>
+      </ul>
+
+    </mat-tab>
+    <mat-tab label="Selected articles:">
+      <ul>
+        <li *ngFor="let artId of DataStore.UI.selectedArticles">
+            <a (click)="setMainArticle(artId)">
+                {{DataStore.data.articles[artId].meta.title}} 
+            </a>
+          <!-- <input type="checkbox" [checked]=isArticleSelected(artId) (change)="toggleSelectedState(artId)"></li> -->
+          <mat-slide-toggle type="checkbox" [checked]=isArticleSelected(artId) (change)="toggleSelectedState(artId)"></mat-slide-toggle>
+      </ul>      
+    </mat-tab>
+</mat-tab-group>
+
+<!-- 
+<button (click)="DataStore.mostSimilarArticlesIds(DataStore.UI.selectedArticles)">asddsaasdasddsa</button>
+<pre>
+    {{ DataStore.UI.similarArticles | json}}
+</pre> -->

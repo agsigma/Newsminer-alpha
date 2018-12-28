@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+@keyframes KRECIOL { /* flame pulses */
+    0%   { opacity:1; }
+    50%  { opacity:0.6; }
+    100% { opacity:1; }
+}
+
+.kreciol {
+    opacity:1;  
+    animation: KRECIOL 1s infinite;
+    color: peru;
+}
+
+body {
+    padding-top: 10px;
+}
