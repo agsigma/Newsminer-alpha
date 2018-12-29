@@ -8482,9 +8482,25 @@ export var DataStore = {
     },
     similarityToSet: function(selectedArtsIds, artId) {
         var res = 0;
+        var tmpVector = {
+            meta: {
+                entities: {                    
+                }
+            }
+        }
+
+        var artsMap = DataStore.data.articles;
         selectedArtsIds.forEach(selectedArtId =>{
-            res += this.cosineSimilarity(DataStore.data.articles[selectedArtId], DataStore.data.articles[artId]);
+            Object.keys(artsMap[selectedArtId].meta.entities).forEach(tag => {
+                tmpVector.meta.entities[tag] = tmpVector.meta.entities[tag] || 0;
+                tmpVector.meta.entities[tag] += artsMap[selectedArtId].meta.entities[tag];
+            })
         });
+
+        // selectedArtsIds.forEach(selectedArtId =>{
+        //     res += this.cosineSimilarity(DataStore.data.articles[selectedArtId], DataStore.data.articles[artId]);
+        // });
+        res += this.cosineSimilarity(tmpVector, DataStore.data.articles[artId]);
         return res;
     },
     mostSimilarArticlesIds: function(artsIds) {
